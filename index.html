@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
@@ -10,8 +13,8 @@
 <body>
   <form id="uploadForm">
     <label for="fileInput">Choisir une image</label>
-    <input type="file" id="fileInput" onchange="previewImage()" />
-    <button type="button" onclick="uploadImage()">Upload Image</button>
+    <input type="file" id="fileInput"  />
+    <button type="button" id="buttonUpload">Upload Image</button>
   </form>
 
   <!-- Div pour afficher l'image prévisualisée -->

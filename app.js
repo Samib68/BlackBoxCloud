@@ -3,6 +3,7 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
   
+  
   // Your web app's Firebase configuration
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   const firebaseConfig = {
@@ -22,7 +23,7 @@
   const blackDb = getDatabase(app);
 
 
-export  function previewImage() {
+function previewImage() {
   const fileInput = document.getElementById('fileInput');
   const imagePreview = document.getElementById('imagePreview');
 
@@ -34,7 +35,9 @@ export  function previewImage() {
       // Créez un élément d'image pour afficher la prévisualisation
       const img = document.createElement('img');
       img.src = e.target.result;
-      img.style.width = '720px';
+
+      // Ajoutez une classe pour le style (défini dans votre CSS)
+      img.classList.add('preview-image');
 
       // Effacez le contenu précédent de la div de prévisualisation
       imagePreview.innerHTML = '';
@@ -43,25 +46,30 @@ export  function previewImage() {
       imagePreview.appendChild(img);
     };
 
+    reader.onerror = function (e) {
+      console.error('Erreur lors de la lecture du fichier:', e.target.error);
+    };
+
     // Lisez le fichier en tant que URL de données
     reader.readAsDataURL(fileInput.files[0]);
   }
 }
 
-export async function uploadImage() {
+
+async function uploadImage() {
   const fileInput = document.getElementById('fileInput');
   const uploadedImage = fileInput.files[0];
 
   if (uploadedImage) {
     // Générez un nom de fichier unique pour éviter les conflits
-    const fileName = Date.now() + '_' + uploadedImage.name;
+	const fileName = Date.now() + '_' + Math.floor(Math.random() * 1000);
 
     // Créez une référence à l'emplacement de stockage dans Firebase avec le nom de fichier généré
     const storageRef = ref(blackDb, 'images/' + fileName);
 
     try {
       // Chargez le fichier vers Firebase Storage
-      const snapshot = await uploadBytes(storageRef, uploadedImage);
+	const snapshot = await uploadBytes(storageRef, uploadedImage);
 
       console.log('Image uploaded successfully. Download URL:', snapshot.ref.getDownloadURL());
     } catch (error) {
@@ -71,3 +79,12 @@ export async function uploadImage() {
     console.warn('Aucune image sélectionnée.');
   }
 }
+
+const fileInput = document.getElementById('fileInput');
+  const uploadButton = document.getElementById('uploadButton');
+
+  // Ajoutez l'événement 'change' au fichier input pour appeler la fonction previewImage
+  fileInput.addEventListener('change', previewImage);
+
+  // Ajoutez l'événement 'click' au bouton d'envoi pour appeler la fonction uploadImage
+  buttonUpload.addEventListener('click', uploadImage);
