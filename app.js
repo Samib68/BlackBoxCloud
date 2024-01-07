@@ -1,4 +1,3 @@
-
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
@@ -69,22 +68,23 @@ async function uploadImage() {
 
     try {
       // Chargez le fichier vers Firebase Storage
-	const snapshot = await uploadBytes(storageRef, uploadedImage);
+	    const snapshot = await uploadBytes(storageRef, uploadedImage);
+
+      alert("success");
 
       console.log('Image uploaded successfully. Download URL:', snapshot.ref.getDownloadURL());
     } catch (error) {
-      console.error('Error uploading image:', error.message);
+      // console.error('Error uploading image:'/*, error.message*/);
+      console.log('Error uploading image:'/*, error.message*/);
     }
   } else {
-    console.warn('Aucune image sélectionnée.');
+    // console.warn('Aucune image sélectionnée.');
+    console.log('Aucune image sélectionnée.');
   }
 }
 
 const fileInput = document.getElementById('fileInput');
-  const uploadButton = document.getElementById('uploadButton');
+fileInput.addEventListener('change', previewImage); // Ajoutez l'événement 'change' au fichier input pour appeler la fonction previewImage
 
-  // Ajoutez l'événement 'change' au fichier input pour appeler la fonction previewImage
-  fileInput.addEventListener('change', previewImage);
-
-  // Ajoutez l'événement 'click' au bouton d'envoi pour appeler la fonction uploadImage
-  buttonUpload.addEventListener('click', uploadImage);
+const uploadButton = document.getElementById('buttonUpload');
+uploadButton.addEventListener('click', uploadImage); // Ajoutez l'événement 'click' au bouton d'envoi pour appeler la fonction uploadImage

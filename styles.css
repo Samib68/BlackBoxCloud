@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  margin: 20px;
+  /* margin: 20px; */
   text-align: center;
 }
 
@@ -39,7 +39,7 @@ button:hover {
   background-color: #007AA5;
 }
 
-#imagePreview {
-  max-width: 300px;
-  margin: 20px auto;
-}
+/* #imagePreview {
+  width: 300px;
+  margin: auto;
+} */
